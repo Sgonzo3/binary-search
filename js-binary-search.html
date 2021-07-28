@@ -10,16 +10,10 @@
     <h1>JavaScript Binary Search</h1>
     <p>CTRL + SHIFT + I to inspect console in DevTools</p>
     <script>
-        /*
-        Use left right and mid pointers
-        left and right at array ends
-        mid = array[l+r/2] // round
-        if > target move r = mid - 1
-        if < target move l = mid + 1
-        */
-
         let IterativeBinarySearch = (array, target) => {
+            // Use left right and mid pointers
             let left, mid, right;
+            // left and right at array ends
             left = 0;
             right = array.length-1;
 
@@ -48,12 +42,13 @@
         let testArray = [];
         let letterArray = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
-        for (let i=0; i<100000; i++) {
+        for (let i=0; i < 1000_000; i++) {
             testArray.push(i+1);
         }
 
         console.log(testArray);
 
+        IterativeBinarySearch(testArray, 'z');
         IterativeBinarySearch(testArray, 55);
         IterativeBinarySearch(testArray, 66);
         IterativeBinarySearch(testArray, 73);
@@ -67,9 +62,42 @@
         IterativeBinarySearch(letterArray, 't');
         IterativeBinarySearch(letterArray, 'T');
 
-        let RecursivebinarySearch = (array, target) => {
+        let recursiveBinarySearch = (array, target, left, right) => {
+
+            mid = Math.floor((left + right) / 2);
+            console.log('searching...', array[mid], target);
+
+            if(left > right || target.typeOf !== left.typeOf || target.typeOf !== right.typeOf) {
+                console.log('FALSE',left, mid,right, array, array[left], array[mid], array[right]);
+                return false;
+            }
+
+            if (array[mid] === target) {
+                console.log('TRUE', array[mid], target);
+                return true;
+            } 
+            
+            if(array[mid] < target) {
+                recursiveBinarySearch(array, target, mid + 1, right);
+            } else if (array[mid] > target) {
+                recursiveBinarySearch(array, target, left, mid - 1);
+            }
 
         }
+
+        recursiveBinarySearch(testArray, 'z', 0, testArray.length-1);
+        recursiveBinarySearch(testArray, 55, 0, testArray.length-1);
+        recursiveBinarySearch(testArray, 66, 0, testArray.length-1);
+        recursiveBinarySearch(testArray, 73, 0, testArray.length-1);
+        recursiveBinarySearch(testArray, 506, 0, testArray.length-1);
+        recursiveBinarySearch(testArray, 0, 0, testArray.length-1);
+        recursiveBinarySearch(testArray, -3, 0, testArray.length-1);
+        recursiveBinarySearch(testArray, 97069, 0, testArray.length-1);
+
+        recursiveBinarySearch(letterArray, -1, 0, letterArray.length-1);
+        recursiveBinarySearch(letterArray, 'a', 0, letterArray.length-1);
+        recursiveBinarySearch(letterArray, 't', 0, letterArray.length-1);
+        recursiveBinarySearch(letterArray, 'T', 0, letterArray.length-1);
     </script>
 </body>
 </html>
